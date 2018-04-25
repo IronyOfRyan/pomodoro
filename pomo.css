@@ -1,3 +1,8 @@
 body {
   text-align: center;
+  font-size: 30px;
+  color: white;
+  background: #ff4b1f;
+  background: -webkit-linear-gradient(to right, #1fddff, #ff4b1f);
+  background: linear-gradient(to right, #1fddff, #ff4b1f);
 }
