@@ -7,9 +7,6 @@ let minutes = 0;
 let seconds = minutes * 60;
 let interval;
 
-let zeroPad = (num) => {
-    return (num < 10) ? "0" + num : num;
-}
 
 let pomoInit = (activity) => {
   if(activity = 'work'){
@@ -20,6 +17,10 @@ let pomoInit = (activity) => {
   seconds = minutes * 60;
   minuteSpan.innerHTML = zeroPad(minutes);
   secondSpan.innerHTML = '00';
+}
+
+let zeroPad = (num) => {
+  return (num < 10) ? "0" + num : num;
 }
 
 let countDown = () => {
@@ -33,10 +34,7 @@ let countDown = () => {
   if(seconds == 0){
     timerStop();
   }
-
-
-
-    secondSpan.innerHTML = zeroPad(seconds % 60);
+  secondSpan.innerHTML = zeroPad(seconds % 60);
   }
 
 

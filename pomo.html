@@ -4,18 +4,35 @@
   <title> Pomodoro Timer </title>
    <link rel="stylesheet" type="text/css" href="pomo.css">
    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
 </head>
 <body>
-  <h1>Pomodoro Timer</h1>
+  <div class = "jumbotron">
+    <div class = "container justify-content-center">
+      <h1>Pomodoro Timer</h1>
 
-  <h5>Get to Work!</h5>
+      <h5>Get to Work!</h5>
 
-  <h3><span id = "minuteSpan">Minute</span>:<span id="secondSpan">Second</span></h3>
-  <div id = "buttons">
-    <button id = "playButton">Play</button>
-    <button id = "pauseButton">Pause</button>
-    <button id = "resetButton">Reset</button>
-  </div>
-  <script src="pomo.js"></script>
+      <h3><span id = "minuteSpan">Minute</span>:<span id="secondSpan">Second</span></h3>
+
+      <div id= "buttons" class="container">
+        <div class="btn-group btn-group-lg" role="group">
+          <div class="col">
+            <button id = "playButton" type="button" class="btn btn-secondary">
+              <span class = "glyphicon glyphicon-play" aria-hidden="true"></span>Play
+            </button>
+          </div>
+          <div class="col">
+            <button id = "pauseButton" type="button" class="btn btn-secondary">Pause</button>
+          </div>
+          <div class="col">
+            <button id = "resetButton" type="button" class="btn btn-secondary rounded">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <script src="pomo.js"></script>
+    </div>
 </body>
 </html>
