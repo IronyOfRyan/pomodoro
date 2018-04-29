@@ -9,9 +9,9 @@ let interval;
 
 
 let pomoInit = (activity) => {
-  if(activity = 'work'){
+  if (activity = 'work') {
     minutes = 25;
-  }else{
+  } else {
     minutes = 5;
   }
   seconds = minutes * 60;
@@ -26,34 +26,34 @@ let zeroPad = (num) => {
 let countDown = () => {
   seconds--;
 
-  if(seconds % 60 === 59){
+  if (seconds % 60 === 59) {
     minutes--;
     minuteSpan.innerHTML = zeroPad(minutes);
   }
 
-  if(seconds == 0){
+  if (seconds == 0) {
     timerStop();
   }
   secondSpan.innerHTML = zeroPad(seconds % 60);
-  }
+}
 
 
 let timerStop = () => {
   clearInterval(interval);
 }
 
-playButton.addEventListener('click', function startTime(){
-  if(interval) {
+playButton.addEventListener('click', function startTime() {
+  if (interval) {
     timerStop();
   }
   interval = setInterval(countDown, 1000);
 });
 
-pauseButton.addEventListener('click', function (){
+pauseButton.addEventListener('click', function() {
   clearInterval(interval);
 });
 
-resetButton.addEventListener('click', function (){
+resetButton.addEventListener('click', function() {
   timerStop()
   pomoInit('work');
 });
