@@ -32,6 +32,10 @@ let minutes = 0,
     return (num < 10) ? "0" + num : num;
   }
 
+  let classShow = () => {
+    notification.classList.add('show');
+  }
+
   let resetVal = () => {
     if (areYouWorking) {
       minutes = 25;
@@ -64,14 +68,16 @@ let minutes = 0,
   }
 
   workButton.addEventListener('click', function() {
+    timerStop();
     notification.innerHTML = 'Get to Work!';
-    notification.classList.add('show');
+    classShow();
     pomoInit('work');
   });
 
   breakButton.addEventListener('click', function() {
+    timerStop();
     notification.innerHTML = 'Take a break!';
-    notification.classList.add('show');
+    classShow();
     pomoInit('break');
   });
 
@@ -80,17 +86,20 @@ let minutes = 0,
       timerStop();
     }
     interval = setInterval(countDown, 1000);
-    notification.classList.add('show');
+    classShow();
+    setTimeout(function(){playButton.classList.add('slide')}, 100);
   });
 
   pauseButton.addEventListener('click', function() {
     timerStop();
+    setTimeout(function(){playButton.classList.remove('slide')}, 300);
   });
 
   resetButton.addEventListener('click', function() {
     timerStop();
     resetVal();
     notification.classList.remove('show');
+    setTimeout(function(){playButton.classList.remove('slide')},0);
   });
 
   pomoInit('work');

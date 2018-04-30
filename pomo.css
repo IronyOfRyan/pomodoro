@@ -29,11 +29,15 @@ body {
 }
 
 .hide{
-  display:none;
+  visibility: hidden;
 }
 
 .show {
-  display: block;
+  visibility: visible;
+}
+
+.slide {
+  display: none;
 }
 
 h3 {
