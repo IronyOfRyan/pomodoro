@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title> Pomodoro Timer </title>
   <link rel="stylesheet" type="text/css" href="pomo.css">
   <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans" rel="stylesheet">
@@ -11,10 +11,21 @@
 
 <body>
   <div class="jumbotron">
-    <div class="container justify-content-center">
+    <div class="container">
       <h1>Pomodoro Timer</h1>
 
-      <h5>Get to Work!</h5>
+      <div id="workOrBreak" >
+        <div class="btn-group btn-group-lg" role="group">
+          <div class="col">
+            <button id="workButton" type="button" class="btn btn-secondary">Work</button>
+          </div>
+          <div class="col">
+            <button id="breakButton" type="button" class="btn btn-secondary">Break</button>
+          </div>
+        </div>
+      </div>
+
+      <h5 id = "notification">Get to Work!</h5>
 
       <h3><span id = "minuteSpan">Minute</span>:<span id="secondSpan">Second</span></h3>
 
@@ -22,14 +33,14 @@
         <div class="btn-group btn-group-lg" role="group">
           <div class="col">
             <button id="playButton" type="button" class="btn btn-secondary">
-              <span class = "glyphicon glyphicon-play" aria-hidden="true"></span>Play
+              <span aria-hidden="true"></span>Play
             </button>
           </div>
           <div class="col">
             <button id="pauseButton" type="button" class="btn btn-secondary">Pause</button>
           </div>
           <div class="col">
-            <button id="resetButton" type="button" class="btn btn-secondary rounded">Reset</button>
+            <button id="resetButton" type="button" class="btn btn-secondary">Reset</button>
           </div>
         </div>
       </div>

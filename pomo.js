@@ -1,61 +1,75 @@
-let playButton = document.getElementById("playButton");
-let pauseButton = document.getElementById("pauseButton");
-let resetButton = document.getElementById("resetButton");
-let minuteSpan = document.getElementById("minuteSpan");
-let secondSpan = document.getElementById("secondSpan");
-let minutes = 0;
-let seconds = minutes * 60;
-let interval;
+//
+const workButton = document.getElementById("workButton"),
+      breakButton = document.getElementById("breakButton"),
+      notification = document.getElementById("notification"),
+      playButton = document.getElementById("playButton"),
+      pauseButton = document.getElementById("pauseButton"),
+      resetButton = document.getElementById("resetButton"),
+      minuteSpan = document.getElementById("minuteSpan"),
+      secondSpan = document.getElementById("secondSpan");
+let minutes = 0,
+    seconds = minutes * 60,
+    interval;
 
 
-let pomoInit = (activity) => {
-  if (activity = 'work') {
-    minutes = 25;
-  } else {
-    minutes = 5;
-  }
-  seconds = minutes * 60;
-  minuteSpan.innerHTML = zeroPad(minutes);
-  secondSpan.innerHTML = '00';
-}
-
-let zeroPad = (num) => {
-  return (num < 10) ? "0" + num : num;
-}
-
-let countDown = () => {
-  seconds--;
-
-  if (seconds % 60 === 59) {
-    minutes--;
+  let pomoInit = (activity) => {
+    if (activity == 'work') {
+      notification.innerHTML = 'Get to Work!';
+      minutes = 25;
+    } else {
+      notification.innerHTML = 'Take a break!';
+      activity = 'break';
+      minutes = 5;
+    }
+    seconds = minutes * 60;
     minuteSpan.innerHTML = zeroPad(minutes);
+    secondSpan.innerHTML = '00';
   }
 
-  if (seconds == 0) {
-    timerStop();
+  let zeroPad = (num) => {
+    return (num < 10) ? "0" + num : num;
   }
-  secondSpan.innerHTML = zeroPad(seconds % 60);
-}
 
+  let countDown = () => {
+    seconds--;
 
-let timerStop = () => {
-  clearInterval(interval);
-}
+    if (seconds % 60 === 59) {
+      minutes--;
+      minuteSpan.innerHTML = zeroPad(minutes);
+    }
 
-playButton.addEventListener('click', function startTime() {
-  if (interval) {
-    timerStop();
+    if (seconds == 0) {
+      timerStop();
+    }
+    secondSpan.innerHTML = zeroPad(seconds % 60);
   }
-  interval = setInterval(countDown, 1000);
-});
 
-pauseButton.addEventListener('click', function() {
-  clearInterval(interval);
-});
 
-resetButton.addEventListener('click', function() {
-  timerStop()
+  const timerStop = () => {
+    clearInterval(interval);
+  }
+
+  workButton.addEventListener('click', function() {
+    pomoInit('work');
+  });
+
+  breakButton.addEventListener('click', function() {
+    pomoInit('break');
+  });
+
+  playButton.addEventListener('click', function() {
+    if (interval) {
+      timerStop();
+    }
+    interval = setInterval(countDown, 1000);
+  });
+
+  pauseButton.addEventListener('click', function() {
+    clearInterval(interval);
+  });
+
+  resetButton.addEventListener('click', function() {
+    timerStop()
+  });
+
   pomoInit('work');
-});
-
-pomoInit('work');
