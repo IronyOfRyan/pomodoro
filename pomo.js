@@ -7,18 +7,20 @@ const workButton = document.getElementById("workButton"),
       resetButton = document.getElementById("resetButton"),
       minuteSpan = document.getElementById("minuteSpan"),
       secondSpan = document.getElementById("secondSpan");
+
 let minutes = 0,
     seconds = minutes * 60,
-    interval;
+    interval,
+    areYouWorking = null;
 
 
   let pomoInit = (activity) => {
     if (activity == 'work') {
-      notification.innerHTML = 'Get to Work!';
+      areYouWorking = true;
       minutes = 25;
     } else {
-      notification.innerHTML = 'Take a break!';
-      activity = 'break';
+      areYouWorking = false;
+      activity == 'break';
       minutes = 5;
     }
     seconds = minutes * 60;
@@ -28,6 +30,18 @@ let minutes = 0,
 
   let zeroPad = (num) => {
     return (num < 10) ? "0" + num : num;
+  }
+
+  let resetVal = () => {
+    if (areYouWorking) {
+      minutes = 25;
+    } else {
+      minutes = 5;
+    }
+
+    seconds = minutes * 60;
+    minuteSpan.innerHTML = zeroPad(minutes);
+    secondSpan.innerHTML = '00';
   }
 
   let countDown = () => {
@@ -45,15 +59,19 @@ let minutes = 0,
   }
 
 
-  const timerStop = () => {
+  let timerStop = () => {
     clearInterval(interval);
   }
 
   workButton.addEventListener('click', function() {
+    notification.innerHTML = 'Get to Work!';
+    notification.classList.add('show');
     pomoInit('work');
   });
 
   breakButton.addEventListener('click', function() {
+    notification.innerHTML = 'Take a break!';
+    notification.classList.add('show');
     pomoInit('break');
   });
 
@@ -62,14 +80,17 @@ let minutes = 0,
       timerStop();
     }
     interval = setInterval(countDown, 1000);
+    notification.classList.add('show');
   });
 
   pauseButton.addEventListener('click', function() {
-    clearInterval(interval);
+    timerStop();
   });
 
   resetButton.addEventListener('click', function() {
-    timerStop()
+    timerStop();
+    resetVal();
+    notification.classList.remove('show');
   });
 
   pomoInit('work');

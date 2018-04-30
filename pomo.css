@@ -28,10 +28,17 @@ body {
   margin-bottom: 70px;
 }
 
+.hide{
+  display:none;
+}
+
+.show {
+  display: block;
+}
+
 h3 {
   background-color: grey;
   padding: 20px;
-  color: black;
 }
 
 #buttons {
