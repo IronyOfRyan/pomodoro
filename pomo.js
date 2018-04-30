@@ -99,7 +99,7 @@ let minutes = 0,
     timerStop();
     resetVal();
     notification.classList.remove('show');
-    setTimeout(function(){playButton.classList.remove('slide')},0);
+    setTimeout(function(){playButton.classList.remove('slide')}, 0);
   });
 
   pomoInit('work');

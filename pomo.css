@@ -1,7 +1,5 @@
-html, body {
-  height: 100%;
-  background: black;
-}
+html, body{height:100%; margin:0;padding:0}
+
 
 html {
   display: table;
@@ -20,12 +18,56 @@ body {
   text-align: center;
   font-size: 30px;
   color: white;
-  background: #ff4b1f!important;
+  background: #232526;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+h1 {
+  color: grey !important;
+}
+
+h3 {
+  background-color: grey;
+  padding: 20px;
+}
+
+h5 {
+  color: grey !important;
 }
 
 #workOrBreak {
   margin-top: 10px;
   margin-bottom: 70px;
+}
+
+#buttons {
+  margin-top: 70px;
+}
+
+.jumbotron {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  background: #FF8243 !important;
+  padding: 20px;
+  margin: 10px;
+  color: #fff;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1.3em;
+  border: 13px dotted grey;
+  border-radius: 10px;
+  box-shadow: 0 0 0 4px #FF8243, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+  text-shadow: -1px -1px #FF8243;
+  font-weight: normal;
+}
+
+.container-fluid{
+  height:100%;
+  display:table;
+  width: 100%;
+  padding: 0;
 }
 
 .hide{
@@ -40,18 +82,6 @@ body {
   display: none;
 }
 
-h3 {
-  background-color: grey;
-  padding: 20px;
-}
-
-#buttons {
-  margin-top: 70px;
-}
-
-.jumbotron {
-  text-align: center;
-  font-size: 30px;
-  color: white;
-  background: #ff4b1f !important;
+.btn {
+  text-shadow: -1px -1px #FF8243;
 }
