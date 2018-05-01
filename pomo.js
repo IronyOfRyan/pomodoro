@@ -1,4 +1,6 @@
-//
+
+
+
 const workButton = document.getElementById("workButton"),
       breakButton = document.getElementById("breakButton"),
       notification = document.getElementById("notification"),
@@ -6,7 +8,8 @@ const workButton = document.getElementById("workButton"),
       pauseButton = document.getElementById("pauseButton"),
       resetButton = document.getElementById("resetButton"),
       minuteSpan = document.getElementById("minuteSpan"),
-      secondSpan = document.getElementById("secondSpan");
+      secondSpan = document.getElementById("secondSpan"),
+      audio = new Audio("alarm-buzzer.mp3");
 
 let minutes = 0,
     seconds = minutes * 60,
@@ -32,8 +35,12 @@ let minutes = 0,
     return (num < 10) ? "0" + num : num;
   }
 
-  let classShow = () => {
+  let showNotification = () => {
     notification.classList.add('show');
+  }
+
+  let slidePlay = () => {
+    setTimeout(function(){playButton.classList.remove('slide')}, 300);
   }
 
   let resetVal = () => {
@@ -58,8 +65,14 @@ let minutes = 0,
 
     if (seconds == 0) {
       timerStop();
+      audio.play()
     }
     secondSpan.innerHTML = zeroPad(seconds % 60);
+  }
+
+  let audioStop = () => {
+    audio.pause();
+    audio.currentTime = 0;
   }
 
 
@@ -70,14 +83,15 @@ let minutes = 0,
   workButton.addEventListener('click', function() {
     timerStop();
     notification.innerHTML = 'Get to Work!';
-    classShow();
+    showNotification();
     pomoInit('work');
+    audioStop();
   });
 
   breakButton.addEventListener('click', function() {
     timerStop();
     notification.innerHTML = 'Take a break!';
-    classShow();
+    showNotification();
     pomoInit('break');
   });
 
@@ -86,20 +100,22 @@ let minutes = 0,
       timerStop();
     }
     interval = setInterval(countDown, 1000);
-    classShow();
+    showNotification();
     setTimeout(function(){playButton.classList.add('slide')}, 100);
   });
 
   pauseButton.addEventListener('click', function() {
     timerStop();
-    setTimeout(function(){playButton.classList.remove('slide')}, 300);
+    slidePlay();
+    audioStop();
   });
 
   resetButton.addEventListener('click', function() {
     timerStop();
     resetVal();
-    notification.classList.remove('show');
-    setTimeout(function(){playButton.classList.remove('slide')}, 0);
+    slidePlay();
+    audioStop();
+    notification.classList.remove('show')
   });
 
   pomoInit('work');
