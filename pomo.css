@@ -95,3 +95,14 @@ div.incDec{
 .btn {
   text-shadow: -1px -1px #FF8243;
 }
+
+#myProgress {
+   width: 100%;
+   background-color: grey;
+}
+#myBar {
+    margin-top: 10px;
+   width: 1%;
+   height: 30px;
+   background-color: green;
+}
