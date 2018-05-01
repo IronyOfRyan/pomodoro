@@ -1,14 +1,17 @@
 
 
 
-const workButton = document.getElementById("workButton"),
-      breakButton = document.getElementById("breakButton"),
-      notification = document.getElementById("notification"),
-      playButton = document.getElementById("playButton"),
-      pauseButton = document.getElementById("pauseButton"),
-      resetButton = document.getElementById("resetButton"),
-      minuteSpan = document.getElementById("minuteSpan"),
-      secondSpan = document.getElementById("secondSpan"),
+const workButton = document.querySelector("#workButton"),
+      breakButton = document.querySelector("#breakButton"),
+      notification = document.querySelector("#notification"),
+      playButton = document.querySelector("#playButton"),
+      pauseButton = document.querySelector("#pauseButton"),
+      resetButton = document.querySelector("#resetButton"),
+      minuteSpan = document.querySelector("#minuteSpan"),
+      secondSpan = document.querySelector("#secondSpan"),
+      workMin = document.querySelector("#workMin"),
+      breakMin = document.querySelector("#breakMin"),
+      incDec = document.querySelectorAll(".incDecButtons"),
       audio = new Audio("alarm-buzzer.mp3");
 
 let minutes = 0,
@@ -18,13 +21,14 @@ let minutes = 0,
 
 
   let pomoInit = (activity) => {
+    notification.classList.remove('show')
     if (activity == 'work') {
+      notification.innerHTML = 'Get to Work!';
       areYouWorking = true;
-      minutes = 25;
+      minutes = workMin.innerHTML = 25;
     } else {
       areYouWorking = false;
-      activity == 'break';
-      minutes = 5;
+      minutes = breakMin.innerHTML = 5;
     }
     seconds = minutes * 60;
     minuteSpan.innerHTML = zeroPad(minutes);
@@ -40,14 +44,14 @@ let minutes = 0,
   }
 
   let slidePlay = () => {
-    setTimeout(function(){playButton.classList.remove('slide')}, 300);
+    setTimeout(() => {playButton.classList.remove('slide')}, 300);
   }
 
   let resetVal = () => {
     if (areYouWorking) {
-      minutes = 25;
+      minutes = parseInt(workMin.innerHTML);
     } else {
-      minutes = 5;
+      minutes = parseInt(breakMin.innerHTML);
     }
 
     seconds = minutes * 60;
@@ -66,6 +70,11 @@ let minutes = 0,
     if (seconds == 0) {
       timerStop();
       audio.play()
+      if(!areYouWorking){
+      pomoInit('work');
+      }else{
+      pomoInit();
+      }
     }
     secondSpan.innerHTML = zeroPad(seconds % 60);
   }
@@ -80,7 +89,74 @@ let minutes = 0,
     clearInterval(interval);
   }
 
-  workButton.addEventListener('click', function() {
+  incDec.forEach(elem => {
+    elem.addEventListener('click', event => {
+      // Makes sure the value is always divisible by 5. No accidental countdown starts at 4's, 9's, etc.
+        if (interval) {
+          resetVal();
+        }
+
+        if(event.target.id == 'workMinus') {
+          if(!areYouWorking){return}
+          if(minutes <= 5) {return}
+
+          workMin.innerHTML = minutes -= 5;
+          seconds = minutes * 60;
+          minuteSpan.innerHTML = zeroPad(minutes);
+        } else if (event.target.id == 'workPlus') {
+          if(!areYouWorking){return}
+          if(minutes >= 90) {return}
+
+          workMin.innerHTML = minutes += 5;
+          seconds = minutes * 60;
+          minuteSpan.innerHTML = zeroPad(minutes);
+        }
+
+        if(event.target.id == 'breakMinus') {
+          if(areYouWorking){return}
+          if(minutes <= 1) {return}
+          if(minutes == 10){
+            event.target.innerHTML = '-1';
+            event.target.nextElementSibling.innerHTML = '+5';
+            breakMin.innerHTML = minutes -= 5;
+          }else if(minutes == 5){
+            event.target.innerHTML = '-1';
+            event.target.nextElementSibling.innerHTML = '+1';
+            breakMin.innerHTML = minutes -= 1;
+          }else if(minutes <= 4) {
+            event.target.innerHTML = '-1';
+            event.target.nextElementSibling.innerHTML = '+1';
+            breakMin.innerHTML = minutes -= 1;
+          }else{
+            event.target.innerHTML = '-5';
+            event.target.nextElementSibling.innerHTML = '+5';
+            breakMin.innerHTML = minutes -= 5;
+          }
+          seconds = minutes * 60;
+          minuteSpan.innerHTML = zeroPad(minutes);
+       }else if (event.target.id == 'breakPlus') {
+          if(areYouWorking){return}
+          if(minutes >= 30) {return}
+          if(minutes == 4){
+            breakMin.innerHTML = minutes += 1;
+            event.target.innerHTML = '+5';
+          }else if(minutes <= 4){
+            breakMin.innerHTML = minutes += 1;
+            event.target.innerHTML = '+1';
+          }else {
+            breakMin.innerHTML = minutes += 5;
+            event.target.previousElementSibling.innerHTML = '-5';
+            event.target.innerHTML = '+5';
+            }
+          seconds = minutes * 60;
+          minuteSpan.innerHTML = zeroPad(minutes);
+        }
+
+    });
+
+  });
+
+  workButton.addEventListener('click', () => {
     timerStop();
     notification.innerHTML = 'Get to Work!';
     showNotification();
@@ -88,29 +164,31 @@ let minutes = 0,
     audioStop();
   });
 
-  breakButton.addEventListener('click', function() {
+  breakButton.addEventListener('click', () => {
     timerStop();
     notification.innerHTML = 'Take a break!';
     showNotification();
-    pomoInit('break');
+    pomoInit();
+    audioStop();
   });
 
-  playButton.addEventListener('click', function() {
+  playButton.addEventListener('click', () => {
+    if (minutes == 0){return seconds = 0}
     if (interval) {
       timerStop();
     }
     interval = setInterval(countDown, 1000);
     showNotification();
-    setTimeout(function(){playButton.classList.add('slide')}, 100);
+    setTimeout(() => {playButton.classList.add('slide')}, 100);
   });
 
-  pauseButton.addEventListener('click', function() {
+  pauseButton.addEventListener('click', () => {
     timerStop();
     slidePlay();
     audioStop();
   });
 
-  resetButton.addEventListener('click', function() {
+  resetButton.addEventListener('click', () => {
     timerStop();
     resetVal();
     slidePlay();

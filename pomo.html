@@ -17,17 +17,33 @@
       <div id="workOrBreak" >
         <div class="btn-group btn-group-lg" role="group">
           <div class="col">
-            <button id="workButton" type="button" class="btn btn-secondary">Work</button>
+            <div id="workButton" type="button" class="btn btn-secondary">Work - <span id = "workMin"></span></div>
           </div>
           <div class="col">
-            <button id="breakButton" type="button" class="btn btn-secondary">Break</button>
+            <div id="breakButton" type="button" class="btn btn-secondary">Break - <span id = "breakMin">5</span></div>
           </div>
         </div>
       </div>
 
+      <div>
+        <div class = "incDec">
+          <button id= "workMinus" class= "incDecButtons btn btn-secondary">-5</button>
+          <button id= "workPlus" class= "incDecButtons btn btn-secondary">+5</button>
+        </div>
+        <div class = "incDec">
+          <button id= "breakMinus" class= "incDecButtons btn btn-secondary">-1</button>
+          <button id= "breakPlus" class= "incDecButtons btn btn-secondary">+5</button>
+        </div>
+      </div>
+
+
+      <div id breakButtons>
+
+      </div>
+
       <h5 id ="notification" class="hide">Get to Work!</h5>
 
-      <h3><span id = "minuteSpan">Minute</span>:<span id="secondSpan">Second</span></h3>
+      <h3><span id = "minuteSpan" min = "0" max = "60">Minute</span>:<span id="secondSpan">Second</span></h3>
 
       <div id="buttons" class="container">
         <div class="btn-group btn-group-lg" role="group">
@@ -46,11 +62,6 @@
     <script src="pomo.js"></script>
   </div>
 
-
-  <audio controls>
-  <source src="alarm-buzzer.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
 </body>
 
 </html>
