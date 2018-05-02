@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const workButton = document.querySelector("#workButton"),
       breakButton = document.querySelector("#breakButton"),
       notification = document.querySelector("#notification"),
@@ -14,7 +16,6 @@ const workButton = document.querySelector("#workButton"),
 
 let app = {
 
-  audio: null,
   minutes: 0,
   seconds: 0,
   interval: null,
@@ -30,7 +31,7 @@ let app = {
       this.areYouWorking = false;
       this.minutes = +breakMin.innerHTML;
     }
-    this.seconds = 00;
+    this.seconds = 0;
     app.renderTime();
   },
   // Padding that provides the extra 0 when the number is single digit
@@ -62,17 +63,17 @@ let app = {
     } else {
       this.minutes = parseInt(breakMin.innerHTML);
     }
-    this.seconds = 00;
+    this.seconds = 0;
     app.renderTime();
   },
   // Logic that count the timer down from 59 seconds subtracting a minute everytime it reaches 0 until secs/min are both 0
   countDown: () => {
     if (!this.started) {
-      return false
+      return false;
     }
 
-    if (this.seconds == 0) {
-      if (this.minutes == 0) {
+    if (this.seconds === 0) {
+      if (this.minutes === 0) {
         app.timerDone();
         audio.play();
         return;
@@ -95,9 +96,9 @@ let app = {
   // When the timer gets to all 0's switch it from the work timer to the break and vice versa
   timerDone: () => {
     this.minutes = 0;
-    this.seconds = 00;
+    this.seconds = 0;
     this.started = false;
-    app.init() ? areYouWorking : app.init('work');
+    app.init() ? this.areYouWorking : app.init('work');
   },
   // Loops through the inc/dec buttons and picks which one is clicked
   inc: incDec.forEach(elem => {
@@ -109,20 +110,20 @@ let app = {
 
       if (event.target.id == 'workMinus') {
         if (!this.areYouWorking) {
-          return
+          return;
         }
         if (this.minutes <= 5) {
-          return
+          return;
         }
 
         workMin.innerHTML = this.minutes -= 5;
         app.renderTime();
       } else if (event.target.id == 'workPlus') {
         if (!this.areYouWorking) {
-          return
+          return;
         }
         if (this.minutes >= 90) {
-          return
+          return;
         }
 
         workMin.innerHTML = this.minutes += 5;
@@ -131,10 +132,10 @@ let app = {
 
       if (event.target.id == 'breakMinus') {
         if (this.areYouWorking) {
-          return
+          return;
         }
         if (this.minutes <= 1) {
-          return
+          return;
         }
         if (this.minutes == 10) {
           event.target.innerHTML = '-1';
@@ -156,10 +157,10 @@ let app = {
         app.renderTime();
       } else if (event.target.id == 'breakPlus') {
         if (this.areYouWorking) {
-          return
+          return;
         }
         if (this.minutes >= 30) {
-          return
+          return;
         }
         if (this.minutes == 4) {
           breakMin.innerHTML = this.minutes += 1;
@@ -172,7 +173,7 @@ let app = {
           event.target.previousElementSibling.innerHTML = '-5';
           event.target.innerHTML = '+5';
         }
-        app.renderTime()
+        app.renderTime();
       }
       app.timerStop();
     });
@@ -198,8 +199,9 @@ let app = {
   }),
 
   playButton: playButton.addEventListener('click', () => {
-    if (this.minutes == 0) {
-      return this.seconds = 0;
+    if (this.minutes === 0) {
+      this.seconds = 0;
+    	return;
     }
     if (this.interval) {
       app.timerStop();

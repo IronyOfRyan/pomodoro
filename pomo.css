@@ -112,10 +112,6 @@ div.incDec{
   transition: opacity 1s linear;
 }
 
-.slide {
-  display: none;
-}
-
 .btn {
   text-shadow: -1px -1px #FF8243;
   font-family: Black Han Sans;
