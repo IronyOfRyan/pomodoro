@@ -20,63 +20,67 @@ let app = {
     progress: null,
     audio: null,
     minutes: 0,
-    seconds: this.minutes * 60,
+    seconds: 0,
     interval: null,
+    started: false,
     areYouWorking: null,
     init: (activity) => {
-      notification.classList.remove('show')
       if (activity == 'work') {
-        this.notification.innerHTML = 'Get to Work!';
+        notification.innerHTML = 'Get to Work!';
         this.areYouWorking = true;
-        this.minutes = workMin.innerHTML = 25;
+        this.minutes = +workMin.innerHTML ;
       } else {
         this.areYouWorking = false;
-        this.minutes = breakMin.innerHTML = 5;
+        this.minutes = +breakMin.innerHTML;
       }
-      this.seconds = this.minutes * 60;
-      minuteSpan.innerHTML = app.zeroPad(this.minutes);
-      secondSpan.innerHTML = '00';
+      this.seconds = 00;
+      app.renderDom();
     },
-    resetValu: (mins, secs, started) =>{
-
+    resetVariables: (mins, secs, started) =>{
+      this.minutes = mins;
+      this.seconds = secs;
+      this.started = started;
     },
     zeroPad: (num) => {
       return (num < 10) ? "0" + num : num;
     },
+    hideNotification: () => {
+      notification.classList.add('hide');
+      notification.classList.remove('show');
+    },
     showNotification: () => {
+      notification.classList.remove('hide');
       notification.classList.add('show');
     },
-    slidePlay: () => {
-      setTimeout(() => {playButton.classList.remove('slide')}, 300);
+    renderDom: () => {
+      minuteSpan.innerHTML = app.zeroPad(this.minutes);
+      secondSpan.innerHTML = app.zeroPad(this.seconds);
     },
     resetVal: () => {
+      this.started = false;
       if (this.areYouWorking) {
         this.minutes = parseInt(workMin.innerHTML);
       }else {
         this.minutes = parseInt(breakMin.innerHTML);
     }
-      this.seconds = this.minutes * 60;
-      minuteSpan.innerHTML = app.zeroPad(minutes);
-      secondSpan.innerHTML = '00';
+      this.seconds = 00;
+      app.renderDom();
     },
     countDown: () => {
-      this.seconds--;
-
-      if (this.seconds % 60 === 59) {
-        this.minutes--;
-        minuteSpan.innerHTML = app.zeroPad(minutes);
-      }
+      if(!this.started){return false}
 
       if (this.seconds == 0) {
-        app.timerStop();
+        if(this.minutes == 0) {
+        app.timerDone();
         audio.play()
-        if(!this.areYouWorking){
-        this.init('work');
-        }else{
-        this.init();
+        return;
         }
-      }
-        this.secondSpan.innerHTML = app.zeroPad(seconds % 60);
+        this.seconds = 59;
+        this.minutes--;
+        }else{
+        this.seconds--;
+        }
+      app.renderDom();
       },
     audioStop: () => {
       audio.pause();
@@ -84,6 +88,12 @@ let app = {
     },
     timerStop: () => {
     clearInterval(this.interval);
+    },
+    timerDone: () => {
+      this.minutes = 0;
+      this.seconds = 00;
+      this.started = false;
+      app.init() ? areYouWorking : app.init('work');
     },
     inc: incDec.forEach(elem => {
           elem.addEventListener('click', event => {
@@ -97,15 +107,13 @@ let app = {
                 if(this.minutes <= 5) {return}
 
                 workMin.innerHTML = this.minutes -= 5;
-                this.seconds = this.minutes * 60;
-                minuteSpan.innerHTML = app.zeroPad(minutes);
+                minuteSpan.innerHTML = app.zeroPad(this.minutes);
               } else if (event.target.id == 'workPlus') {
                 if(!this.areYouWorking){return}
                 if(this.minutes >= 90) {return}
 
                 workMin.innerHTML = this.minutes += 5;
-                this.seconds = this.minutes * 60;
-                minuteSpan.innerHTML = app.zeroPad(minutes);
+                app.renderDom();
               }
 
               if(event.target.id == 'breakMinus') {
@@ -128,8 +136,7 @@ let app = {
                   event.target.nextElementSibling.innerHTML = '+5';
                   breakMin.innerHTML = this.minutes -= 5;
                 }
-                this.seconds = this.minutes * 60;
-                minuteSpan.innerHTML = app.zeroPad(minutes);
+                app.renderDom();
              }else if (event.target.id == 'breakPlus') {
                 if(this.areYouWorking){return}
                 if(this.minutes >= 30) {return}
@@ -144,26 +151,24 @@ let app = {
                   event.target.previousElementSibling.innerHTML = '-5';
                   event.target.innerHTML = '+5';
                   }
-                this.seconds = this.minutes * 60;
-                minuteSpan.innerHTML = app.zeroPad(minutes);
+                app.renderDom()
               }
-
+              app.timerStop();
           });
+
       }),
   workbutton: workButton.addEventListener('click', () => {
     app.timerStop();
     notification.innerHTML = 'Get to Work!';
-    app.showNotification();
     this.minutes = parseInt(workMin.innerHTML);
     this.areYouWorking = true;
-    minuteSpan.innerHTML = app.zeroPad(minutes);
+    minuteSpan.innerHTML = app.zeroPad(this.minutes);
     app.audioStop();
   }),
 
   breakButton: breakButton.addEventListener('click', () => {
     app.timerStop();
     notification.innerHTML = 'Take a break!';
-    app.showNotification();
     app.init();
     app.audioStop();
   }),
@@ -173,23 +178,23 @@ let app = {
     if (this.interval) {
       app.timerStop();
     }
+    this.started = true;
     this.interval = setInterval(app.countDown, 1000);
-    app.showNotification();
-    setTimeout(() => {playButton.classList.add('slide')}, 100);
+    app.hideNotification();
+
   }),
 
   pauseButton: pauseButton.addEventListener('click', () => {
     app.timerStop();
-    app.slidePlay();
     app.audioStop();
+    app.showNotification();
   }),
 
   resetButton: resetButton.addEventListener('click', () => {
     app.timerStop();
     app.resetVal();
-    app.slidePlay();
     app.audioStop();
-    notification.classList.remove('show')
+    app.showNotification();
   })
 
 };
