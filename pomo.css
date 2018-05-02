@@ -16,6 +16,7 @@ body {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+  font-family: 'Monoton', cursive, 'Black Han Sans', sans-serif;
   font-size: 30px;
   color: white;
   background: #232526;  /* fallback for old browsers */
@@ -24,18 +25,21 @@ body {
 }
 
 h1 {
+  font-family: Monoton !important;
   color: grey !important;
 }
 
 h3 {
   background-color: grey;
   padding: 20px;
+  font-family: Black Han Sans !important;
   margin-top: 60px !important;
   margin-bottom: 100px !important;
 }
 
 h5 {
   color: grey !important;
+  font-family: Black Han Sans !important;
 }
 
 #workOrBreak {
@@ -56,7 +60,9 @@ h5 {
 }
 
 .selected {
-  border: 1px solid red;
+  box-shadow: 0 0 16px white;
+  padding: 3px 0px 3px 3px;
+  border: 10px solid black;
 }
 
 div.incDec{
@@ -91,6 +97,7 @@ div.incDec{
 
 .incDecButtons {
   font-size: 10px !important;
+  font-family: sans-serif !important;
 }
 
 .hide{
@@ -111,4 +118,5 @@ div.incDec{
 
 .btn {
   text-shadow: -1px -1px #FF8243;
+  font-family: Black Han Sans;
 }
