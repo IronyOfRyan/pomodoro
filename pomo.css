@@ -30,12 +30,13 @@ h1 {
 h3 {
   background-color: grey;
   padding: 20px;
+  margin-top: 60px !important;
+  margin-bottom: 100px !important;
 }
 
 h5 {
   color: grey !important;
 }
-
 
 #workOrBreak {
   margin-top: 10px;
@@ -48,6 +49,14 @@ h5 {
 
 #workButton, #breakButton {
   width:200px;
+}
+
+#notification {
+  margin-top: 120px;
+}
+
+.selected {
+  border: 1px solid red;
 }
 
 div.incDec{
@@ -80,6 +89,10 @@ div.incDec{
   padding: 0;
 }
 
+.incDecButtons {
+  font-size: 10px !important;
+}
+
 .hide{
   visibility: hidden;
   opacity: 0;
@@ -98,15 +111,4 @@ div.incDec{
 
 .btn {
   text-shadow: -1px -1px #FF8243;
-}
-
-#myProgress {
-   width: 100%;
-   background-color: grey;
-}
-#myBar {
-    margin-top: 10px;
-   width: 1%;
-   height: 30px;
-   background-color: green;
 }
