@@ -1,5 +1,9 @@
 /*jshint esversion: 6 */
 
+
+// Convert to React reminder
+
+
 const workButton = document.querySelector("#workButton"),
       breakButton = document.querySelector("#breakButton"),
       notification = document.querySelector("#notification"),
